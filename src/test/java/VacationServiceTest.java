@@ -1,28 +1,19 @@
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvFileSource;
 
 public class VacationServiceTest {
-    @Test
-    public void shouldCalcMonthsOnVacation() {
+    @ParameterizedTest
+
+    @CsvFileSource(files = "src/test/resources/vacation.csv")
+
+    public void shouldCalcMonthsOnVacation(int income, int expences, int threshold, int expected) {
         VacationService service = new VacationService();
-        int income = 10_000;
-        int expences = 3_000;
-        int threshold = 20_000;
-        int expected = 3;
+
         int actual = service.calculate(income, expences, threshold);
 
         Assertions.assertEquals(expected, actual);
     }
 
-    @Test
-    public void shouldCalcMonthsOnVacationMoreIncom() {
-        VacationService service = new VacationService();
-        int income = 100_000;
-        int expences = 60_000;
-        int threshold = 150_000;
-        int expected = 2;
-        int actual = service.calculate(income, expences, threshold);
-
-        Assertions.assertEquals(expected, actual);
-    }
 }
